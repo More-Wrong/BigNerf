@@ -702,28 +702,25 @@ module rearHandle(){
    }
 }
 batteryL = 130;
-batteryW = 34;
-batteryH = 27;
+batteryW = 40;
+batteryH = 30;
 batteryWireSectionW = 37;
 batteryWireHoleD = 10;
 batteryWallT = 3;
-
+batteryLRBias = 0;
 batteryCaseBoltSize = M3;
-batteryCaseTAroundBolts = 4;
+batteryCaseTAroundBolts = 4.5;
 batteryCaseNutHoleLIn = 3;
-batteryCaseDownFromScrews = -2;
+batteryCaseDownFromScrews = -5;
 batteryCaseRearPlateT = 5;
-batteryCaseStepperPlateT = 3;
-batteryCaseStepperPlateL = 12;
-batteryCaseStepperFudge = -3;
 
 batteryCaseCapT = 5;
 module batteryHolder(){
    difference(){
       union(){
          hull(){
-            translate([-batteryWallT, batteryW/2+structureBarOutDist, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarTAround*2+structureBarD, h = batteryCaseRearPlateT);
-            translate([-batteryWallT, batteryW/2-structureBarOutDist, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarTAround*2+structureBarD, h = batteryCaseRearPlateT);
+            translate([-batteryWallT, batteryW/2+structureBarOutDist-batteryLRBias, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarTAround*2+structureBarD, h = batteryCaseRearPlateT);
+            translate([-batteryWallT, batteryW/2-structureBarOutDist-batteryLRBias, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarTAround*2+structureBarD, h = batteryCaseRearPlateT);
             translate([-batteryWallT, -batteryWallT, -batteryWallT])cube([batteryCaseRearPlateT, batteryWallT*2+batteryW, batteryWallT*3+batteryH*2]);
          }
          translate([-batteryWallT, -batteryWallT, -batteryWallT])cube([batteryWallT+batteryL, batteryWallT*2+batteryW, batteryWallT*3+batteryH*2]);
@@ -736,8 +733,8 @@ module batteryHolder(){
             translate([-batteryCaseTAroundBolts/2, 0, batteryCaseTAroundBolts-batteryWallT])cylinder(d = batteryCaseTAroundBolts*2, h = batteryCaseTAroundBolts);
          }
       }
-      translate([-batteryWallT-0.001, batteryW/2+structureBarOutDist, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarD, h = batteryCaseRearPlateT+0.002);
-      translate([-batteryWallT-0.001, batteryW/2-structureBarOutDist, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarD, h = batteryCaseRearPlateT+0.002);
+      translate([-batteryWallT-0.001, batteryW/2+structureBarOutDist-batteryLRBias, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarD, h = batteryCaseRearPlateT+0.002);
+      translate([-batteryWallT-0.001, batteryW/2-structureBarOutDist-batteryLRBias, batteryH+batteryWallT/2+batteryCaseDownFromScrews])rotate([0, 90, 0])cylinder(d = structureBarD, h = batteryCaseRearPlateT+0.002);
 
       
       translate([batteryL-batteryCaseNutHoleLIn-0.25-M(batteryCaseBoltSize, fullNutH)/2, batteryW/2, batteryWallT+batteryH*2+batteryCaseTAroundBolts])rotate([0, 90, 0])FullNutHole(batteryCaseBoltSize, batteryCaseTAroundBolts, ERR = 0.1, VertERR = 0.5);
@@ -759,6 +756,7 @@ module batteryHolder(){
       }
    }
 }
+!batteryHolderCap();
 module batteryHolderCap(){
    difference(){
       hull(){
